@@ -1,0 +1,36 @@
+pool:
+  name: Hosted VS2017
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 8.9'
+  inputs:
+    versionSpec: 8.9.0
+
+- script: |
+   cd $(Build.SourcesDirectory)
+   npm install
+
+  displayName: 'npm i'
+
+- script: |
+   cd $(Build.SourcesDirectory)
+   npm install -g @angular/cli
+
+  displayName: 'global cli'
+
+- script: |
+   cd $(Build.SourcesDirectory)
+   ng build --aot --output-hashing=all
+
+  displayName: 'ng build'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: 'dist/'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nest-stock-game-client'

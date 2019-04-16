@@ -1,0 +1,26 @@
+<div class="lobby">
+  <div class="header">LOBBY({{ gameId }})</div>
+  <mat-tab-group class="mtg" dynamicHeight="true">
+    <mat-tab
+      [label]="tabs[0]"
+      cdkScrollable
+      origin="0"
+    >
+      <div class="list-items">
+        <div class="list-item" *ngFor="let player of (players | async)">
+          {{ player.name }}
+          {{ (curPlayer | async)?.name == player.name ? "(You)" : "" }}
+          {{ player.isPartyLeader ? "(Party Leader)" : "" }}
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <button
+    mat-raised-button
+    class="start-button"
+    (click)="start()"
+    *ngIf="(curPlayer | async)?.isPartyLeader"
+  >
+    START
+  </button>
+</div>

@@ -1,0 +1,13 @@
+<div class="splash">
+  v: {{version}}
+  <form class="">
+    <mat-form-field class="">
+      <input #gameInput name="gameId" matInput [(ngModel)]="gameId" placeholder="Game ID">
+    </mat-form-field>
+
+    <mat-form-field class="">
+      <input #nameInput name="name" matInput [(ngModel)]="name" placeholder="Name">
+    </mat-form-field>
+  </form>
+  <button mat-button (click)="joinGame()" *ngIf="name?.length > 0 && gameId">Join Game</button>
+</div>
